@@ -9,8 +9,6 @@ COPY requirements.txt .
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv pip install --system --no-cache-dir -r requirements.txt
 
-COPY src/ src/
+COPY . .
 
-COPY dashboard/ dashboard/
-
-CMD ["streamlit", "run", "dashboard/app.py", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "dashboard/app.py", "--server.address=0.0.0.0", "--server.port=8501"]
