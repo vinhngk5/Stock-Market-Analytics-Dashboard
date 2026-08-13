@@ -7,8 +7,8 @@ WORKDIR /app
 COPY requirements.txt .
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv pip install --system --no-cache-dir -r requirements.txt
+    uv pip install --system -r requirements.txt
 
-COPY . .
+COPY src/ src/
 
-CMD ["streamlit", "run", "dashboard/app.py", "--server.address=0.0.0.0", "--server.port=8501"]
+CMD ["streamlit", "run", "src/app.py", "--server.address=0.0.0.0", "--server.port=8501"]
