@@ -57,20 +57,52 @@ The project collects 📊 stock market data, stores it in 🗄️ PostgreSQL, pe
 ## 📂 Project Structure
 
 ```text
-Stock-Market-Analytics-Dashboard/
+📦 Stock-Market-Analytics-Dashboard/
 │
 ├── 📁 src/
-│   ├── 🐍 app.py
-│   ├── 🗄️ database/
-│   │   └── 📜 init.sql
-│   └── ...
+│   │
+│   ├── 📁 core/
+│   │   └── ⚙️ config.py
+│   │       └── Application and environment configuration
+│   │
+│   ├── 📁 database/
+│   │   ├── 🔌 connection.py
+│   │   │   └── PostgreSQL connection management
+│   │   ├── 🗄️ init.sql
+│   │   │   └── Database schema initialization
+│   │   └── 📚 repository.py
+│   │       └── Database access and data retrieval operations
+│   │
+│   ├── 📁 provider/
+│   │   └── 📈 yfinance_loader.py
+│   │       └── Stock market data loading from Yahoo Finance
+│   │
+│   ├── 📁 service/
+│   │   ├── 📊 analytics_service.py
+│   │   │   └── Analytical logic and financial data processing
+│   │   └── 📥 ingestion_service.py
+│   │       └── Data ingestion workflow
+│   │
+│   └── 🚀 app.py
+│       └── Streamlit dashboard entry point
 │
 ├── ⚙️ .env.example
+│   └── Environment variable template
+│
 ├── 🐳 Dockerfile
+│   └── Application container configuration
+│
 ├── 🐳 docker-compose.yml
+│   └── Multi-container application orchestration
+│
 ├── 📦 requirements.txt
-├── 📄 LICENSE
-└── 📖 README.md
+│   └── Python dependencies
+│
+├── 📖 README.md
+│   └── Project documentation
+│
+└── 📄 LICENSE
+    └── MIT License
 ```
 
 ---
