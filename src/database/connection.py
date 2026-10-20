@@ -1,3 +1,5 @@
+from threading import local
+
 import psycopg
 
 from core.config import settings
@@ -7,7 +9,7 @@ class DatabaseConnection:
     """Simple application-wide connection holder."""
 
     _instance = None
-    _connection = None
+    _thread_local = local()
 
     def __new__(cls):
         if cls._instance is None:
@@ -16,10 +18,13 @@ class DatabaseConnection:
 
     @property
     def connection(self):
-        if self._connection is None or self._connection.closed:
-            self._connection = psycopg.connect(settings.conninfo, autocommit=True)
-        return self._connection
+        connection = getattr(self._thread_local, "connection", None)
+        if connection is None or connection.closed:
+            connection = psycopg.connect(settings.conninfo, autocommit=True)
+            self._thread_local.connection = connection
+        return connection
 
     def close(self):
-        if self._connection is not None and not self._connection.closed:
-            self._connection.close()
+        connection = getattr(self._thread_local, "connection", None)
+        if connection is not None and not connection.closed:
+            connection.close()

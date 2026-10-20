@@ -41,3 +41,26 @@ CREATE INDEX IF NOT EXISTS idx_stock_prices_date
 
 CREATE INDEX IF NOT EXISTS idx_stock_prices_symbol_date
     ON stock_prices(symbol, date);
+
+
+CREATE TABLE IF NOT EXISTS stock_ticks (
+    symbol VARCHAR(20) NOT NULL,
+    timestamp TIMESTAMPTZ NOT NULL,
+    price NUMERIC(18, 4) NOT NULL,
+    day_volume BIGINT,
+    bid NUMERIC(18, 4),
+    ask NUMERIC(18, 4),
+    exchange VARCHAR(50),
+    market_hours SMALLINT,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_stock_ticks_stock
+        FOREIGN KEY (symbol)
+        REFERENCES stocks(symbol),
+    CONSTRAINT uq_stock_ticks_symbol_timestamp
+        UNIQUE (symbol, timestamp)
+);
+
+
+CREATE INDEX IF NOT EXISTS idx_stock_ticks_symbol_timestamp
+    ON stock_ticks(symbol, timestamp DESC);
